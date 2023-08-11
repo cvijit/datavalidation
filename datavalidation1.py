@@ -16,14 +16,19 @@ def main():
 
         while True:
             failed_rows = fix_failed_rows(df, failed_rows, validation_rules)
-            if not st.button("Save and Export"):
-                break
+            confirm_changes = st.checkbox("Confirm changes and export validation results")
 
-            export_validation_results(df, failed_rows)
+            if st.button("Save and Export") and confirm_changes:
+                export_validation_results(df, failed_rows)
+            else:
+                st.info("Changes not confirmed. Reverting to original data.")
 
-            df = load_data(uploaded_file)
-            show_data_preview(df)
-            validation_rules = get_validation_rules(df)
+            # Reload original data file if not confirmed
+            if not confirm_changes:
+                df = load_data(uploaded_file)
+                show_data_preview(df)
+                validation_rules = get_validation_rules(df)
+
             validate_data(df, validation_rules)
 
             failed_rows = []
