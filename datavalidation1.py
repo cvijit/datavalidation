@@ -179,7 +179,6 @@ def validate_row(row, validation_rules):
     return True
 
 def export_validation_results(df, failed_rows):
-    """Exports the validation results to a spreadsheet or other file format."""
 
     if st.checkbox("Export validation results"):
         file_format = st.selectbox("Select file format", ["CSV", "Excel", "JSON"])
